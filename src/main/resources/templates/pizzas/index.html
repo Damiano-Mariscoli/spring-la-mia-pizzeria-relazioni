@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="~{fragments/resources :: headTags}"></div>
+    <title>Pizzas</title>
+  </head>
+  <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <main class="container">
+      <div class="row my-5">
+        <div class="col-6">
+          <div class="search-container">
+            <form
+              class="d-flex"
+              th:action="@{/pizzas/searchByNome}"
+              method="get"
+            >
+              <input
+                type="text"
+                name="nome"
+                class="form-control"
+                placeholder="Cerca pizza..."
+              />
+              <button type="submit" class="btn btn-primary">Cerca</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <a class="btn btn-primary w-100" th:href="@{/pizzas/create}"
+            >Crea una pizza</a
+          >
+        </div>
+      </div>
+
+      <hr />
+
+      <h1>Pizzas</h1>
+      <hr />
+
+      <section class="row">
+        <div class="col-12">
+          <table th:if="${pizzas.size() > 0}" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Descrizione</th>
+                <th>Prezzo</th>
+                <!-- <th>Foto</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="pizza : ${pizzas}" th:object="${pizza}">
+                <td th:text="${pizza.nome}"></td>
+                <td th:text="${pizza.descrizione}"></td>
+                <td th:text="${pizza.Prezzo} + €"></td>
+                <td>
+                  <a
+                    class="btn btn-primary btn-sm"
+                    th:href="@{/pizzas/{id}(id=${pizza.id})}"
+                    >show</a
+                  >
+                </td>
+                <td>
+                  <a
+                    class="btn btn-success btn-sm"
+                    th:href="@{/pizzas/edit/{id}(id=${pizza.id})}"
+                    >edit</a
+                  >
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    data-bs-toggle="modal"
+                    th:data-bs-target="'#delete-modal-' + ${pizza.id}"
+                  >
+                    Delete
+                  </button>
+
+                  <div
+                    class="modal fade"
+                    th:id="'delete-modal-' + ${pizza.id}"
+                    tabindex="-1"
+                    aria-labelledby="delete-modal"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">
+                            Stai eliminando la pizza: [[*{nome}]]
+                          </h1>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body">
+                          Sei sicuro di voler eliminare la pizza: [[*{nome}]]?
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Chiudi
+                          </button>
+                          <form
+                            action="#"
+                            th:action="@{/pizzas/delete/{id}(id=${pizza.id})}"
+                            method="post"
+                          >
+                            <button type="submit" class="btn btn-danger">
+                              Elimina
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p th:unless="${pizzas.size() > 0}">
+          Nessuna pizza presente nella nostra applicazione...
+        </p>
+      </section>
+    </main>
+    <div th:replace="~{fragments/resources :: scripts}"></div>
+  </body>
+</html>

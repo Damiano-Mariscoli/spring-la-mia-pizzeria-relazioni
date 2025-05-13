@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="~{fragments/resources :: headTags}"></div>
+    <title>Create Pizza</title>
+  </head>
+  <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+     <main class="container" th:object="${pizza}">
+      <div class="row">
+        <div class="col-12">
+          <th:block>
+            <h1 class="text-center py-4 mb-2 fw-bold">
+                 Modifica l'offera per la pizza
+              [[${offerta.pizza.nome}]]
+            </h1>
+
+            <div class="row justify-content-center">
+              <div class="col-8">
+                <form class="form" th:action="@{/offerte/edit/{id}(id = ${offerta.id})}" th:object="${offerta}" method="post" id="formOfferta">
+                <input type="hidden" th:field="*{pizza}">
+
+                  <div class="mb-3">
+                    <label class="form-lable" for="titolo">Titolo Offerta:</label>
+                   <input class="form-control" type="text" th:field="*{titolo}" name="titolo" th:errorClass="is-invalid">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('titolo')}">
+                      <ul>
+                        <li th:each="error : ${#fields.errors('titolo')}" th:text="${error}" > </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                   <div class="mb-3">
+                    <label class="form-lable" for="data-offerta">Inizio offerta:</label>
+                    <input class="form-control" type="date" id="data-offerta" th:field="*{dataOfferta}" th:errorClass="is-invalid">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('dataOfferta')}">
+                      <ul>
+                        <li th:each="error : ${#fields.errors('dataOfferta')}" th:text="${error}" > </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-lable" for="fine-offerta">Fine offerta:</label>
+                    <input class="form-control" type="date" id="fine-offerta" th:field="*{fineOfferta}" th:errorClass="is-invalid">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('fineOfferta')}">
+                      <ul>
+                        <li th:each="error : ${#fields.errors('fineOfferta')}" th:text="${error}" > </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="my-3 d-flex justify-content-between">
+                   <input type="submit" class="btn btn-primary" value="Modifica">
+                   <input type="reset" class="btn btn-warning" value="Reset all fields" form="formPizza">
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </th:block>
+        </div>
+      </div>
+    </main>
+    <div th:replace="~{fragments/resources :: scripts}"></div>
+  </body>
+</html>

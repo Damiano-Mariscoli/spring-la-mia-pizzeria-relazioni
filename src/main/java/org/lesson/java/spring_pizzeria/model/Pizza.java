@@ -1,10 +1,13 @@
 package org.lesson.java.spring_pizzeria.model;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -34,13 +37,22 @@ public class Pizza {
     @Min(value = 0, message = "Il prezzo non puo essere un numero negativo")
     private BigDecimal prezzo;
 
+    // aggiunta di una relazione tra 1 pizza e piu offerte (0, 1, 2...)
+    @OneToMany(mappedBy = "pizza")
+    private List<Offerta> offerte;
 
+
+
+    public List<Offerta> getOfferte() {
+    return offerte;
+    }
     /**
      * @return Integer return the id
      */
     public Integer getId() {
         return id;
     }
+    
 
     /**
      * @param id the id to set

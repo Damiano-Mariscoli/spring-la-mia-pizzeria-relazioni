@@ -1,4 +1,5 @@
 package org.lesson.java.spring_pizzeria.controller;
+import org.lesson.java.spring_pizzeria.repo.OffertaRepository;
 import org.lesson.java.spring_pizzeria.repo.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,15 +11,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
+import org.lesson.java.spring_pizzeria.model.Offerta;
 import org.lesson.java.spring_pizzeria.model.Pizza;
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.lesson.java.spring_pizzeria.controller.OffertaController;
+
 
 @Controller
 @RequestMapping("/pizzas")
 public class PizzaController {
      @Autowired
      private PizzaRepository repository;
+     @Autowired
+     private OffertaRepository offertaRepository;
 
    @GetMapping
    public String index(Model model){
@@ -76,8 +82,26 @@ public class PizzaController {
 
    @PostMapping("/delete/{id}")
    public String delete(@PathVariable Integer id){
+
+    Pizza pizza = repository.findById(id).get();
+
+    for (Offerta offertaToDelete : pizza.getOfferte()){
+      offertaRepository.delete(offertaToDelete);
+    }
+  
+
+
     repository.deleteById(id);
 
     return "redirect:/pizzas";
    }
+
+
+   @GetMapping("/{id}/offerta")
+   public String offerta(@PathVariable Integer id, Model model){
+    Offerta offerta = new Offerta();
+    offerta.setPizza(repository.findById(id).get());
+    model.addAttribute("offerta", offerta);
+    return "offerte/create";
+    }
 }

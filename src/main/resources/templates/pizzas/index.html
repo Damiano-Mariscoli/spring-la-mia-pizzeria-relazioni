@@ -57,11 +57,19 @@
                 <td th:text="${pizza.Prezzo} + €"></td>
                 <td>
                   <a
+                    class="btn btn-outline-primary btn-sm"
+                    th:href="@{/pizzas/{id}/offerta(id=${pizza.id})}"
+                    >Offerta</a
+                  >
+                </td>
+                <td>
+                  <a
                     class="btn btn-primary btn-sm"
                     th:href="@{/pizzas/{id}(id=${pizza.id})}"
                     >show</a
                   >
                 </td>
+
                 <td>
                   <a
                     class="btn btn-success btn-sm"

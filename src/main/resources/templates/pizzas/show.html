@@ -16,6 +16,48 @@
           <img th:src="${pizza.foto}" alt="" />
         </div>
       </section>
+      <hr />
+
+      <section class="row mb-3">
+        <div class="col-12">
+          <h3>Offerte:</h3>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Titolo</th>
+                <th>Data inizio offerta</th>
+                <th>Data fine offerta</th>
+              </tr>
+            </thead>
+           
+            </div>
+            <tbody>
+              <tr
+                th:each="offerta : ${pizza.getOfferte()}"
+                th:object="${offerta}"
+              >
+                <td>[[${offerta.id}]]</td>
+                <td>[[${offerta.titolo}]]</td>
+                <td>[[${offerta.dataOfferta}]]</td>
+                <td th:if="${offerta.fineOfferta != null}" style="color: red;">[[${offerta.fineOfferta}]]</td>
+                <td th:if="${offerta.fineOfferta == null}" style="color: green;">Attiva</td>
+                <td>
+                  <a
+                    class="btn btn-success btn-sm"
+                    th:href="@{/offerte/edit/{id}(id=${offerta.id})}"
+                    >edit</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <div class="col-12" th:unless="${pizza.getOfferte().size > 0}">
+                <div class="alert alert-warning">
+                <h4>Non ci sono offerte per questo prodotto.</h4>
+              </div>
     </main>
     <div th:replace="~{fragments/resources :: scripts}"></div>
   </body>

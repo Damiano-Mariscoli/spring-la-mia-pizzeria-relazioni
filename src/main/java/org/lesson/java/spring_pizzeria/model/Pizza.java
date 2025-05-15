@@ -7,13 +7,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.JoinColumn;
+import org.lesson.java.spring_pizzeria.model.Ingrediente;
+import java.util.List;
 
 @Entity
 @Table(name = "pizzas")
@@ -41,7 +45,14 @@ public class Pizza {
     @OneToMany(mappedBy = "pizza")
     private List<Offerta> offerte;
 
+    //Aggiunta di una relazione tra le pizze e gli ingredienti (many  to many)
+    @ManyToMany
+    @JoinTable(name= "ingredienti_pizza",
+    joinColumns = @JoinColumn(name ="pizza_id"),
+    inverseJoinColumns = @JoinColumn(name = "ingrediente_id"))
+    private List<Ingrediente> ingredienti;
 
+    
 
     public List<Offerta> getOfferte() {
     return offerte;
@@ -121,6 +132,27 @@ public class Pizza {
     public String toString(){
         return String.format( "%s: %s prezzo:  %.2f€", this.nome, this.descrizione, this.prezzo );
     
+    }
+
+    /**
+     * @param offerte the offerte to set
+     */
+    public void setOfferte(List<Offerta> offerte) {
+        this.offerte = offerte;
+    }
+
+    /**
+     * @return List<Ingredienti> return the ingredienti
+     */
+    public List<Ingrediente> getIngredienti() {
+        return ingredienti;
+    }
+
+    /**
+     * @param ingredienti the ingredienti to set
+     */
+    public void setIngredienti(List<Ingrediente> ingredienti) {
+        this.ingredienti = ingredienti;
     }
 
 }

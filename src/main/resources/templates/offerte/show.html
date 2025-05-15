@@ -15,12 +15,6 @@
           <p>[[*{prezzo}]] €</p>
           <img th:src="${pizza.foto}" alt="" />
         </div>
-        <div>
-            <h3>Ingredienti:</h3>
-            <ul th:each="ingrediente : ${pizza.ingredienti}">
-                <li th:text="${ingrediente.nome}"></li>
-            </ul>
-        </div>
       </section>
       <hr />
 

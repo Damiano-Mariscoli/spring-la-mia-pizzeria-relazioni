@@ -1,4 +1,5 @@
 package org.lesson.java.spring_pizzeria.controller;
+import org.lesson.java.spring_pizzeria.repo.IngredienteRepository;
 import org.lesson.java.spring_pizzeria.repo.OffertaRepository;
 import org.lesson.java.spring_pizzeria.repo.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,16 @@ import org.lesson.java.spring_pizzeria.controller.OffertaController;
 @Controller
 @RequestMapping("/pizzas")
 public class PizzaController {
+
+    private final IngredienteRepository ingredienteRepository;
      @Autowired
      private PizzaRepository repository;
      @Autowired
      private OffertaRepository offertaRepository;
+
+    PizzaController(IngredienteRepository ingredienteRepository) {
+        this.ingredienteRepository = ingredienteRepository;
+    }
 
    @GetMapping
    public String index(Model model){
@@ -37,6 +44,7 @@ public class PizzaController {
    public String show(@PathVariable Integer id, Model model){
     Pizza pizza = repository.findById(id).get();
     model.addAttribute("pizza", pizza);
+    model.addAttribute("ingredienti", ingredienteRepository.findAll());
     return "pizzas/show";
    }
 
@@ -51,11 +59,13 @@ public class PizzaController {
    @GetMapping("/create")
    public String create(Model model){
      model.addAttribute("pizza", new Pizza());
+     model.addAttribute("ingredienti", ingredienteRepository.findAll());
      return "pizzas/create";
    }
 
    @PostMapping("/create")
    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model){
+    model.addAttribute("ingredienti", ingredienteRepository.findAll());
      
     if (bindingResult.hasErrors()){
       return "pizzas/create";
@@ -67,11 +77,13 @@ public class PizzaController {
    @GetMapping("/edit/{id}")
    public String edit(@PathVariable Integer id, Model model ){
      model.addAttribute(repository.findById(id).get());
+     model.addAttribute("ingredienti", ingredienteRepository.findAll());
      return "pizzas/edit";
    }
 
    @PostMapping("/edit/{id}")
    public String update(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model){
+    model.addAttribute("ingredienti", ingredienteRepository.findAll());
      
     if (bindingResult.hasErrors()){
       return "pizzas/edit";

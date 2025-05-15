@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="~{fragments/resources :: headTags}"></div>
+    <title>[[*{nome}]]</title>
+  </head>
+  <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <main class="container" th:object="${ingrediente}">
+      <section class="row">
+        <div class="col-12">
+          <h1>[[*{nome}]]</h1>
+
+          <p>l'ingrediente è presente in [[*{pizze.size()}]] pizze</p>
+          <p>[[*{descrizione}]]</p>
+        </div>
+      </section>
+      <hr />
+    </main>
+    <div th:replace="~{fragments/resources :: scripts}"></div>
+  </body>
+</html>

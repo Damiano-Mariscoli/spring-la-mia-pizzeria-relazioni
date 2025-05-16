@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 import org.lesson.java.spring_pizzeria.model.Offerta;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.lesson.java.spring_pizzeria.repo.OffertaRepository;
+import org.lesson.java.spring_pizzeria.service.OffertaService;
 import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @RequestMapping("/offerte")
 public class OffertaController {
 
     @Autowired
-    private OffertaRepository repository;
+    private OffertaService offertaService;
 
 
     @PostMapping("/create")
@@ -27,14 +27,14 @@ public class OffertaController {
         if (bindingResult.hasErrors()){
             return "offerte/create";
         }
-        repository.save(formOfferta);
+        offertaService.create(formOfferta);
 
         return "redirect:/pizzas/" + formOfferta.getPizza().getId();
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
-        model.addAttribute(repository.findById(id).get());
+        model.addAttribute(offertaService.getById(id));
         return "offerte/edit";
     }
 
@@ -43,7 +43,7 @@ public class OffertaController {
         if(bindingResult.hasErrors()){
             return "offerte/edit";
         }
-        repository.save(formOfferta);
+       offertaService.update(formOfferta);
          return "redirect:/pizzas/" + formOfferta.getPizza().getId(); 
     }
 

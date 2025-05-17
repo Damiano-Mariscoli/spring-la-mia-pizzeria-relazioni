@@ -12,6 +12,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "ingredienti")
 public class Ingrediente {
@@ -26,6 +28,8 @@ public class Ingrediente {
     @Lob
     private String descrizione;
      //Aggiunta di una relazione tra le pizze e gli ingredienti (many  to many)
+
+     @JsonBackReference
     @ManyToMany()
     @JoinTable(name = "ingredienti_pizza",
         joinColumns = @JoinColumn(name = "ingrediente_id"),

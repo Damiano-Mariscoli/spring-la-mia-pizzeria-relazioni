@@ -17,6 +17,9 @@ import jakarta.validation.constraints.Size;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import org.lesson.java.spring_pizzeria.model.Ingrediente;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 
 @Entity
@@ -42,14 +45,18 @@ public class Pizza {
     private BigDecimal prezzo;
 
     // aggiunta di una relazione tra 1 pizza e piu offerte (0, 1, 2...)
+    
     @OneToMany(mappedBy = "pizza")
+    
     private List<Offerta> offerte;
 
     //Aggiunta di una relazione tra le pizze e gli ingredienti (many  to many)
+    
     @ManyToMany
     @JoinTable(name= "ingredienti_pizza",
     joinColumns = @JoinColumn(name ="pizza_id"),
     inverseJoinColumns = @JoinColumn(name = "ingrediente_id"))
+    
     private List<Ingrediente> ingredienti;
 
     

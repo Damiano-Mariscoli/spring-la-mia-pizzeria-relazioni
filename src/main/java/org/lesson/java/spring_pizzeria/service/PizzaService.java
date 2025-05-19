@@ -5,8 +5,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.lesson.java.spring_pizzeria.repo.OffertaRepository;
 import org.lesson.java.spring_pizzeria.repo.PizzaRepository;
-
-import java.lang.classfile.ClassFile.Option;
 import java.util.List;
 import java.util.Optional;
 import org.lesson.java.spring_pizzeria.model.Offerta;
@@ -29,6 +27,11 @@ public class PizzaService {
     }
     public List <Pizza> findAllSortedByName(){
         return pizzaRepository.findAll(Sort.by("name"));
+    }
+
+    public Optional<Pizza> findById(Integer id){
+        return pizzaRepository.findById(id);
+
     }
 
     public Pizza getById(Integer id){

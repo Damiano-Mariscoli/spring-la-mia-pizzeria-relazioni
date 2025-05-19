@@ -1,9 +1,9 @@
 package org.lesson.java.spring_pizzeria.controller;
 import org.lesson.java.spring_pizzeria.repo.IngredienteRepository;
 import org.lesson.java.spring_pizzeria.repo.OffertaRepository;
-import org.lesson.java.spring_pizzeria.repo.PizzaRepository;
 import org.lesson.java.spring_pizzeria.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +17,7 @@ import org.lesson.java.spring_pizzeria.model.Offerta;
 import org.lesson.java.spring_pizzeria.model.Pizza;
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.lesson.java.spring_pizzeria.controller.OffertaController;
+
 
 
 @Controller
@@ -35,9 +35,10 @@ public class PizzaController {
     }
 
    @GetMapping
-   public String index(Model model){
+   public String index(Authentication authentication, Model model){
     List<Pizza> pizzas = pizzaService.findAll();
     model.addAttribute("pizzas", pizzas);
+    model.addAttribute("username", authentication.getName());
     return "pizzas/index";
    }
 

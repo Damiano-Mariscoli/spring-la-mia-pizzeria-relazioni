@@ -8,6 +8,7 @@
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
     <main class="container">
+      <h3 th:text="'ciao' + ${username}"></h3>
       <div class="row my-5">
         <div class="col-6">
           <div class="search-container">
@@ -28,7 +29,10 @@
         </div>
 
         <div class="col-6">
-          <a class="btn btn-primary w-100" th:href="@{/pizzas/create}"
+          <a
+            sec:authorize="hasAuthority('ADMIN')"
+            class="btn btn-primary w-100"
+            th:href="@{/pizzas/create}"
             >Crea una pizza</a
           >
         </div>
@@ -47,6 +51,9 @@
                 <th>Nome</th>
                 <th>Descrizione</th>
                 <th>Prezzo</th>
+                <th sec:authorize="hasAuthority('ADMIN')"></th>
+                <th sec:authorize="hasAuthority('ADMIN')"></th>
+                <th sec:authorize="hasAuthority('ADMIN')"></th>
                 <!-- <th>Foto</th> -->
               </tr>
             </thead>
@@ -57,6 +64,7 @@
                 <td th:text="${pizza.Prezzo} + €"></td>
                 <td>
                   <a
+                    sec:authorize="hasAuthority('ADMIN')"
                     class="btn btn-outline-primary btn-sm"
                     th:href="@{/pizzas/{id}/offerta(id=${pizza.id})}"
                     >Offerta</a
@@ -70,14 +78,14 @@
                   >
                 </td>
 
-                <td>
+                <td sec:authorize="hasAuthority('ADMIN')">
                   <a
                     class="btn btn-success btn-sm"
                     th:href="@{/pizzas/edit/{id}(id=${pizza.id})}"
                     >edit</a
                   >
                 </td>
-                <td>
+                <td sec:authorize="hasAuthority('ADMIN')">
                   <button
                     type="button"
                     class="btn btn-danger btn-sm"

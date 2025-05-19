@@ -28,6 +28,7 @@
                 <th>Titolo</th>
                 <th>Data inizio offerta</th>
                 <th>Data fine offerta</th>
+                <th sec:authorize="hasAuthority('ADMIN')"></th>
               </tr>
             </thead>
            
@@ -44,6 +45,7 @@
                 <td th:if="${offerta.fineOfferta == null}" style="color: green;">Attiva</td>
                 <td>
                   <a
+                    sec:authorize="hasAuthority('ADMIN')"
                     class="btn btn-success btn-sm"
                     th:href="@{/offerte/edit/{id}(id=${offerta.id})}"
                     >edit</a

@@ -49,8 +49,8 @@
                 <!-- <th>Descrizione</th> -->
                 <th>Numero di Pizze</th>
                 <th></th>
-                <th></th>
-                <th></th>
+                <th sec:authorize="hasAuthority('ADMIN')"></th>
+                <th sec:authorize="hasAuthority('ADMIN')"></th>
               </tr>
             </thead>
             <tbody>
@@ -69,15 +69,14 @@
                     >show</a
                   >
                 </td>
-
-                <td>
+                <td sec:authorize="hasAuthority('ADMIN')">
                   <a
                     class="btn btn-success btn-sm"
                     th:href="@{/ingredienti/edit/{id}(id=${ingrediente.id})}"
                     >edit</a
                   >
                 </td>
-                <td>
+                <td sec:authorize="hasAuthority('ADMIN')">
                   <button
                     type="button"
                     class="btn btn-danger btn-sm"

@@ -11,7 +11,7 @@
       class="navbar navbar-expand navbar-light bg-light px-5"
     >
       <a class="navbar-brand" th:href="@{/}">Spec-java: Spring Pizzeria</a>
-      <div class="ms-auto">
+      <div class="">
         <ul class="nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" th:href="@{/}"
@@ -25,6 +25,16 @@
             <a class="nav-link active" th:href="@{/ingredienti}">Ingredienti</a>
           </li>
         </ul>
+      </div>
+      <div class="user-info ms-auto">
+        Logged user:
+        <span sec:authentication="name" class="fw-bold- me-2"></span>
+        Roles:
+        <span
+          sec:authentication="principal.authorities"
+          class="fst-italic me-2"
+        ></span>
+        <a class="btn btn-sm btn-outline-primary" href="/logout">Sign out</a>
       </div>
     </nav>
   </body>

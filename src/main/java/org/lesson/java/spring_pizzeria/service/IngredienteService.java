@@ -3,9 +3,9 @@ package org.lesson.java.spring_pizzeria.service;
 import java.util.List;
 
 import org.lesson.java.spring_pizzeria.model.Ingrediente;
-import org.lesson.java.spring_pizzeria.model.Offerta;
+
 import org.lesson.java.spring_pizzeria.repo.IngredienteRepository;
-import org.lesson.java.spring_pizzeria.repo.OffertaRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

@@ -33,7 +33,7 @@
 
                   <div class="mb-3">
                     <div class="ingredienti form-check" th:each="ingrediente : ${ingredienti}">
-                      <input type="checkbox" th:id="|ingrediente-${ingrediente.id}|" th:field="${pizze.ingredienti}" th:value="${ingrediente.id}">
+                      <input type="checkbox" th:id="|ingrediente-${ingrediente.id}|" th:field="*{ingredienti}" th:value="${ingrediente.id}">
                       <label th:for="|ingrediente-${ingrediente.id}|" class="form-check-label" th:text="${ingrediente.nome}"></label>
                     </div>
                   </div>
